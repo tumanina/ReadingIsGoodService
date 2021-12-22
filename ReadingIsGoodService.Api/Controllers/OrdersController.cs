@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReadingIsGoodService.Api.Models;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Api.Controllers
 {
     [ApiController]
-    [Route("orders")]
-    public class OrdersController : ControllerBase
+    [Route("api/v1")]
+    public class OrdersController : BaseController
     {
         private readonly ILogger<OrdersController> _logger;
 
@@ -18,9 +18,34 @@ namespace ReadingIsGoodService.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Order> Get()
+        [Route("orders")]
+        [Route("customers/{customerId}/orders")]
+        public async Task<BaseApiDataModel<List<OrderDetailModel>>> GetCustomerOrders(int customerId)
         {
-            return new List<Order>();
+            return await Execute(async () =>
+            {
+                return new List<OrderDetailModel>();
+            });
+        }
+
+        [HttpGet]
+        [Route("orders/{id}")]
+        public async Task<BaseApiDataModel<OrderDetailModel>> GetOrders(int id)
+        {
+            return await Execute(async () =>
+            {
+                return new OrderDetailModel();
+            });
+        }
+
+        [HttpPost]
+        [Route("orders")]
+        public async Task<BaseApiDataModel<OrderDetailModel>> CreateOrder()
+        {
+            return await Execute(async () =>
+            {
+                return new OrderDetailModel();
+            });
         }
     }
 }

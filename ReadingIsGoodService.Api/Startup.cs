@@ -1,10 +1,16 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using ReadingIsGoodService.Api.Models;
+using ReadingIsGoodService.Common.Extensions;
 using ReadingIsGoodService.Logic.Configuration;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace ReadingIsGoodService.Api
@@ -18,9 +24,10 @@ namespace ReadingIsGoodService.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -55,6 +62,16 @@ namespace ReadingIsGoodService.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+                //todo use different exceptions to cover 404, 400 and etc
+                context.Response.StatusCode = 200;
+                var message = new BaseApiModel { Errors = new List<string> { exception.GetMessage() } };
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(message));
+            }));
         }
     }
 }

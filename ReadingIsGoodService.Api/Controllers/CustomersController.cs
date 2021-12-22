@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReadingIsGoodService.Api.Models;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Api.Controllers
 {
     [ApiController]
-    [Route("customers")]
-    public class CustomersController : ControllerBase
+    [Route("api/v1/customers")]
+    public class CustomersController : BaseController
     {
         private readonly ILogger<CustomersController> _logger;
 
@@ -18,9 +18,21 @@ namespace ReadingIsGoodService.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Customer> Get()
+        public async Task<BaseApiDataModel<List<CustomerDetailModel>>> GetCustomers()
         {
-            return new List<Customer>();
+            return await Execute(async () =>
+            {
+                return new List<CustomerDetailModel>();
+            });
+        }
+
+        [HttpPost]
+        public async Task<BaseApiDataModel<CustomerDetailModel>> CreateCustomer(CreateCustomerModel customer)
+        {
+            return await Execute(async () =>
+            {
+                return new CustomerDetailModel();
+            });
         }
     }
 }
