@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using ReadingIsGoodService.Api.Models;
 using ReadingIsGoodService.Common.Extensions;
+using ReadingIsGoodService.Data.Configuration;
 using ReadingIsGoodService.Logic.Configuration;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -39,6 +40,7 @@ namespace ReadingIsGoodService.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReadingIsGoodService Api", Version = "v1" });
             });
 
+            services.ConfigureDataLayer(Configuration);
             services.ConfigureLogic();
         }
 
