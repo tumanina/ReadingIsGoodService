@@ -8,7 +8,7 @@ namespace ReadingIsGoodService.Common.Models
         public string Name { get; set; }
         public ProductType Type { get; set; }
         public decimal Price { get; set; }
-        public int StockCount { get; set; }
+        public int StockQuantity { get; set; }
 
         public virtual ICollection<OrderItemModel> Items { get; set; }
     }

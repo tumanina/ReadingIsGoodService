@@ -10,6 +10,6 @@ namespace ReadingIsGoodService.Common.Models
         public OrderStatus Status { get; set; }
 
         public CustomerModel Customer { get; set; }
-        public List<OrderItemModel> Items { get; set; }
+        public IEnumerable<OrderItemModel> Items { get; set; }
     }
 }
