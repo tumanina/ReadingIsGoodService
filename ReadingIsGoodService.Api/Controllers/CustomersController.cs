@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReadingIsGoodService.Api.Models;
+using ReadingIsGoodService.Logic.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Api.Controllers
@@ -11,10 +13,12 @@ namespace ReadingIsGoodService.Api.Controllers
     public class CustomersController : BaseController
     {
         private readonly ILogger<CustomersController> _logger;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(ILogger<CustomersController> logger)
+        public CustomersController(ICustomerService customerService, ILogger<CustomersController> logger)
         {
             _logger = logger;
+            _customerService = customerService;
         }
 
         [HttpGet]
@@ -22,16 +26,16 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                return new List<CustomerDetailModel>();
+                return (await _customerService.GetCustomers()).Select(c => new CustomerDetailModel { Id = c.Id, Name = c.Name }).ToList();
             });
         }
 
         [HttpPost]
-        public async Task<BaseApiDataModel<CustomerDetailModel>> CreateCustomer(CreateCustomerModel customer)
+        public async Task<BaseApiDataModel<int>> CreateCustomer(CreateCustomerModel customer)
         {
             return await Execute(async () =>
             {
-                return new CustomerDetailModel();
+                return await _customerService.CreateCustomer(new Common.Models.CustomerModel { Name = customer.Name, Email = customer.Email });
             });
         }
     }

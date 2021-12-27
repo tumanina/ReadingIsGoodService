@@ -6,7 +6,7 @@ namespace ReadingIsGoodService.Api.Models
 {
     public class OrderDetailModel
     {
-        public CustomerDetailModel CustomerId { get; set; }
+        public CustomerDetailModel Customer { get; set; }
         public IEnumerable<BaseOrderItemModel> ProductItems { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -2,6 +2,6 @@
 {
     public class OrderItemDetailModel: BaseOrderItemModel
     {
-        public int ProductName { get; set; }
+        public string ProductName { get; set; }
     }
 }

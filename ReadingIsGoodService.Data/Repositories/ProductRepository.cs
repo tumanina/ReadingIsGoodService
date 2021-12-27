@@ -31,13 +31,13 @@ namespace ReadingIsGoodService.Data.Repositories
             {
                 //to do: exception
             }
-            if (entity.StockCount + value < 0)
+            if (entity.StockQuantity + value < 0)
             {
                 //to do: exception
             }
 
             entity.UpdatedDate = DateTime.UtcNow;
-            entity.StockCount += value;
+            entity.StockQuantity += value;
             _dbContext.Update(entity);
 
             await _dbContext.SaveChangesAsync();
