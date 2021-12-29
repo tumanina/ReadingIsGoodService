@@ -2,8 +2,13 @@
 
 <b>Api</b>:
 
+![image](https://user-images.githubusercontent.com/17797666/147704494-c7475d50-11fc-43b7-96c0-1da69eb1f8bf.png)
+
 <b>Database</b>
+
 Schema:
+![image](https://user-images.githubusercontent.com/17797666/147704668-fb9f6c2b-6b36-475d-9fda-9f826110f85a.png)
+
 Database access layer presents EntityFrameworkCore code first approach that provides mechanism to deploy a new database and helps keep concistency between code and database structure. 
 
 Application provides 2 options to use database:
