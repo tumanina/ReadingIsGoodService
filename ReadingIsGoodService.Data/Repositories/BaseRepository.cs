@@ -23,7 +23,7 @@ namespace ReadingIsGoodService.Data.Repositories
             AddEntity(entity);
             await _dbContext.SaveChangesAsync();
 
-            LogActivity(entity, userId);
+            LogActivity(entity, ActivityType.Add, userId);
             await _dbContext.SaveChangesAsync();
 
             return entity.Id;
@@ -31,13 +31,13 @@ namespace ReadingIsGoodService.Data.Repositories
 
         public async Task Update(T entity, int userId)
         {
-            LogActivity(entity, userId);
+            LogActivity(entity, ActivityType.Update, userId);
             await _dbContext.SaveChangesAsync();
         }
 
         public abstract void AddEntity(T entity);
 
-        private void LogActivity(T entity, int userId)
+        private void LogActivity(T entity, ActivityType activityType, int userId)
         {
             JsonSerializerOptions options = new()
             {
@@ -48,6 +48,7 @@ namespace ReadingIsGoodService.Data.Repositories
             _dbContext.ActivityLogs.Add(new ActivityLogEntity
             {
                 EntityType = EntityType,
+                ActivityType = activityType,
                 EntityId = entity.Id,
                 UserId = userId,
                 New = JsonSerializer.Serialize(entity, options)

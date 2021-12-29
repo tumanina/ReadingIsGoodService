@@ -10,7 +10,7 @@ using ReadingIsGoodService.Data;
 namespace ReadingIsGoodService.Data.Migrations
 {
     [DbContext(typeof(ReadingIsGoodDbContext))]
-    [Migration("20211229212022_AddActivityLogs")]
+    [Migration("20211229225556_AddActivityLogs")]
     partial class AddActivityLogs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,9 @@ namespace ReadingIsGoodService.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActivityType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");

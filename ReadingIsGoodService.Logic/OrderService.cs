@@ -4,6 +4,7 @@ using ReadingIsGoodService.Data.Repositories;
 using ReadingIsGoodService.Logic.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Logic
@@ -68,6 +69,11 @@ namespace ReadingIsGoodService.Logic
 
         private async Task ValidateOrder(OrderModel order)
         {
+            if (!order.Items.Any())
+            {
+                throw new Exception("Order must contain items.");
+            }
+
             foreach (var item in order.Items)
             {
                 var product = await _productRepository.GetProduct(item.ProductId);

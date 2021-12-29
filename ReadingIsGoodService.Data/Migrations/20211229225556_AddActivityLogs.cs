@@ -14,6 +14,7 @@ namespace ReadingIsGoodService.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EntityType = table.Column<int>(type: "int", nullable: false),
+                    ActivityType = table.Column<int>(type: "int", nullable: false),
                     EntityId = table.Column<int>(type: "int", nullable: false),
                     New = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),

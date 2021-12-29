@@ -10,6 +10,7 @@ namespace ReadingIsGoodService.Data.Mapping
         {
             return new OrderModel
             {
+                Id = order.Id,
                 Customer = new CustomerModel
                 {
                     Id = order.Customer.Id,

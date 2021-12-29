@@ -14,7 +14,7 @@ namespace ReadingIsGoodService.Api.Mapping
                 Id = order.Id,
                 Customer = new CustomerDetailModel { Id = order.Customer.Id, Name = order.Customer.Name, Email = order.Customer.Email },
                 Status = order.Status,
-                ProductItems = order.Items.Select(i => new OrderItemDetailModel { ProductQuantity = i.Quantity, ProductName = i.Product?.Name }),
+                ProductItems = order.Items.Select(i => new OrderItemDetailModel { ProductId = i.Product.Id, ProductQuantity = i.Quantity, ProductName = i.Product?.Name }),
                 CreatedDate = order.CreatedDate,
                 ModifiedDate = order.UpdatedDate
             };
