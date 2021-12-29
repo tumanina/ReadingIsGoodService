@@ -9,6 +9,8 @@
 Schema:
 ![image](https://user-images.githubusercontent.com/17797666/147704668-fb9f6c2b-6b36-475d-9fda-9f826110f85a.png)
 
+Script: https://github.com/tumanina/ReadingIsGoodService/blob/main/ReadingIsGoodDb.sql
+
 Database access layer presents EntityFrameworkCore code first approach that provides mechanism to deploy a new database and helps keep concistency between code and database structure. 
 
 Application provides 2 options to use database:
