@@ -9,8 +9,18 @@ namespace ReadingIsGoodService.Data.Configuration
     {
         public static void ConfigureDataLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ReadingIsGoodDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            if (configuration["UseInMemoryDatabase"].Equals("true", System.StringComparison.OrdinalIgnoreCase))
+            {
+                services.AddDbContext<ReadingIsGoodDbContext>(options => options
+                    .UseLazyLoadingProxies(false)
+                    .UseInMemoryDatabase("Ordering"));
+            }
+            else
+            {
+                services.AddDbContext<ReadingIsGoodDbContext>(options => options
+                    .UseLazyLoadingProxies(false)
+                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            }
 
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
