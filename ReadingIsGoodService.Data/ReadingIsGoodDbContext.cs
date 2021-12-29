@@ -13,6 +13,7 @@ namespace ReadingIsGoodService.Data
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<OrderItemEntity> OrderItems { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<ActivityLogEntity> ActivityLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,7 @@ namespace ReadingIsGoodService.Data
             modelBuilder.ApplyConfiguration(new OrderEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ActivityLogEntityConfiguration());
         }
     }
 }

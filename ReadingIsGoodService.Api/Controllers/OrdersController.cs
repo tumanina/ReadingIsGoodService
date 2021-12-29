@@ -71,7 +71,7 @@ namespace ReadingIsGoodService.Api.Controllers
                 {
                     CustomerId = orderModel.CustomerId, 
                     Items = orderModel.ProductItems.Select(i => new OrderItemModel { ProductId = i.ProductId, Quantity = i.ProductQuantity })
-                });
+                }, 5);
 
                 if (order == null)
                 {
@@ -80,6 +80,7 @@ namespace ReadingIsGoodService.Api.Controllers
 
                 return new OrderDetailModel
                 {
+                    Id = order.Id,
                     Customer = new CustomerDetailModel { Id = order.Customer.Id, Name = order.Customer.Name, Email = order.Customer.Email },
                     Status = order.Status,
                     ProductItems = order.Items.Select(i => new OrderItemDetailModel { ProductQuantity = i.Quantity, ProductName = i.Product?.Name })

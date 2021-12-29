@@ -15,10 +15,10 @@ namespace ReadingIsGoodService.Logic
             _customerRepository = customerRepository;
         }
 
-        public async Task<int> CreateCustomer(CustomerModel customer)
+        public async Task<int> CreateCustomer(CustomerModel customer, int userId)
         {
             //todo: validation if email and names are specified + email validation
-            return await _customerRepository.CreateCustomer(customer);
+            return await _customerRepository.CreateCustomer(customer, userId);
         }
 
         public async Task<IEnumerable<CustomerModel>> GetCustomers()

@@ -35,7 +35,7 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                return await _customerService.CreateCustomer(new Common.Models.CustomerModel { Name = customer.Name, Email = customer.Email });
+                return await _customerService.CreateCustomer(new Common.Models.CustomerModel { Name = customer.Name, Email = customer.Email }, 5);
             });
         }
     }

@@ -8,6 +8,6 @@ namespace ReadingIsGoodService.Logic.Interfaces
     {
         Task<OrderModel> GetOrder(int id);
         Task<IEnumerable<OrderModel>> GetCustomerOrders(int customerId);
-        Task<OrderModel> CreateOrder(OrderModel order);
+        Task<OrderModel> CreateOrder(OrderModel order, int userId);
     }
 }

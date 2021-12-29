@@ -7,6 +7,6 @@ namespace ReadingIsGoodService.Data.Repositories
     public interface ICustomerRepository
     {
         Task<IEnumerable<CustomerModel>> GetCustomers();
-        Task<int> CreateCustomer(CustomerModel customer);
+        Task<int> CreateCustomer(CustomerModel customer, int userId);
     }
 }

@@ -2,6 +2,7 @@
 using ReadingIsGoodService.Common.Enums;
 using ReadingIsGoodService.Common.Models;
 using ReadingIsGoodService.Data.Entities;
+using ReadingIsGoodService.Data.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,20 @@ using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Data.Repositories
 {
-    internal class OrderRepository : IOrderRepository
+    internal class OrderRepository : BaseRepository<OrderEntity>, IOrderRepository
     {
         private readonly ReadingIsGoodDbContext _dbContext;
 
-        public OrderRepository(ReadingIsGoodDbContext dbContext)
+        public override EntityType EntityType => EntityType.Order;
+
+        public OrderRepository(ReadingIsGoodDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public override void AddEntity(OrderEntity entity)
+        {
+            _dbContext.Orders.Add(entity);
         }
 
         public async Task<IEnumerable<OrderModel>> GetCustomerOrders(int customerId)
@@ -25,23 +33,7 @@ namespace ReadingIsGoodService.Data.Repositories
                 .Include(r => r.Items).ThenInclude(i => i.Product)
                 .ToListAsync();
 
-            //todo: move mapping to mapper
-            return orders.Select(r => new OrderModel
-            {
-                Customer = new CustomerModel
-                {
-                    Id = r.Customer.Id,
-                    Name = r.Customer.Name,
-                    Email = r.Customer.Email
-                },
-                Status = r.Status,
-                Items = r.Items.Select(i => new OrderItemModel
-                {
-                    Product = new ProductModel { Name = i.Product.Name, Price = i.Product.Price },
-                    Quantity = i.Count
-                }).ToList(),
-                CreatedDate = r.CreatedDate
-            });
+            return orders.Select(r => r.Map());
         }
 
         public async Task<OrderModel> GetOrder(int id)
@@ -51,28 +43,11 @@ namespace ReadingIsGoodService.Data.Repositories
                 .Include(r => r.Items).ThenInclude(i => i.Product)
                 .FirstOrDefaultAsync();
 
-            //todo: move mapping to mapper
-            return order == null ? null : new OrderModel
-            {
-                Customer = new CustomerModel
-                {
-                    Id = order.Customer.Id,
-                    Name = order.Customer.Name,
-                    Email = order.Customer.Email
-                },
-                Status = order.Status,
-                Items = order.Items.Select(i => new OrderItemModel
-                {
-                    Product = new ProductModel { Name = i.Product.Name, Price = i.Product.Price },
-                    Quantity = i.Count
-                }).ToList(),
-                CreatedDate = order.CreatedDate
-            };
+            return order == null ? null : order.Map();
         }
 
-        public async Task<int> CreateOrder(int customerId, IEnumerable<OrderItemModel> items)
+        public async Task<int> CreateOrder(int customerId, IEnumerable<OrderItemModel> items, int userId)
         {
-            //todo: move mapping to mapper
             var entity = new OrderEntity
             {
                 CustomerId = customerId,
@@ -84,30 +59,23 @@ namespace ReadingIsGoodService.Data.Repositories
                 entity.Items.Add(new OrderItemEntity { ProductId = item.ProductId, Count = item.Quantity });
             };
 
-            entity.UpdatedDate = DateTime.UtcNow;
-            entity.CreatedDate = DateTime.UtcNow;
-
-            _dbContext.Orders.Add(entity);
-            await _dbContext.SaveChangesAsync();
-
-            return entity.Id;
+            return await Create(entity, userId);
         }
 
-        public async Task UpdateStatus(int orderId, OrderStatus status)
+        public async Task UpdateStatus(int orderId, OrderStatus status, int userId)
         {
             //todo: validate statuses workflow
-            var entity = await GetOrder(orderId);
+            var entity = await _dbContext.Orders.Where(r => r.Id == orderId).FirstOrDefaultAsync();
 
             if (entity == null)
             {
-                //to do: exception
+                throw new Exception($"Order with id '{orderId}' not found");
             }
 
             entity.UpdatedDate = DateTime.UtcNow;
             entity.Status = status;
-            _dbContext.Update(entity);
 
-            await _dbContext.SaveChangesAsync();
+            await Update(entity, userId);
         }
     }
 }

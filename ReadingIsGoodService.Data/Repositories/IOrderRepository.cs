@@ -9,7 +9,7 @@ namespace ReadingIsGoodService.Data.Repositories
     {
         Task<OrderModel> GetOrder(int id);
         Task<IEnumerable<OrderModel>> GetCustomerOrders(int customerId);
-        Task<int> CreateOrder(int customerId, IEnumerable<OrderItemModel> items);
-        Task UpdateStatus(int orderId, OrderStatus status);
+        Task<int> CreateOrder(int customerId, IEnumerable<OrderItemModel> items, int userId);
+        Task UpdateStatus(int orderId, OrderStatus status, int userId);
     }
 }

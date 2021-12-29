@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReadingIsGoodService.Common.Enums;
 using ReadingIsGoodService.Common.Models;
 using ReadingIsGoodService.Data.Entities;
+using ReadingIsGoodService.Data.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,54 +11,36 @@ using System.Threading.Tasks;
 
 namespace ReadingIsGoodService.Data.Repositories
 {
-    internal class CustomerRepository : ICustomerRepository
+    internal class CustomerRepository : BaseRepository<CustomerEntity>, ICustomerRepository
     {
         private readonly ReadingIsGoodDbContext _dbContext;
 
-        public CustomerRepository(ReadingIsGoodDbContext dbContext)
+        public CustomerRepository(ReadingIsGoodDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateCustomer(CustomerModel customer)
+        public override EntityType EntityType => EntityType.Customer;
+
+        public override void AddEntity(CustomerEntity entity)
         {
-            //todo: move mapping to mapper
+            _dbContext.Customers.Add(entity);
+        }
+
+        public async Task<int> CreateCustomer(CustomerModel customer, int userId)
+        {
             var entity = new CustomerEntity
             {
                 Name = customer.Name,
                 Email = customer.Email
             };
 
-            entity.UpdatedDate = DateTime.UtcNow;
-            entity.CreatedDate = DateTime.UtcNow;
-
-            _dbContext.Customers.Add(entity);
-            await _dbContext.SaveChangesAsync();
-
-            return entity.Id;
+            return await Create(entity, userId);
         }
 
         public async Task<IEnumerable<CustomerModel>> GetCustomers()
         {
-            var customers = await _dbContext.Customers.ToListAsync();
-
-            //todo: move mapping to mapper
-            return customers.Select(c => new CustomerModel
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Email = c.Email,
-                Orders = c.Orders.Select(r => new OrderModel
-                {
-                    Status = r.Status,
-                    Items = r.Items.Select(i => new OrderItemModel
-                    {
-                        Product = new ProductModel { Name = i.Product.Name, Price = i.Product.Price },
-                        Quantity = i.Count
-                    }).ToList(),
-                    CreatedDate = r.CreatedDate
-                }).ToList()
-            });
+            return (await _dbContext.Customers.ToListAsync()).Select(c => c.Map()).ToList();
         }
     }
 }

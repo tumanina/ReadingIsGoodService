@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReadingIsGoodService.Api.Models
+namespace ReadingIsGoodService.Tests.IntegrationTests.Models
 {
     public class OrderDetailModel
     {
-        public int Id { get; set; }
-        public CustomerDetailModel Customer { get; set; }
         public IEnumerable<BaseOrderItemModel> ProductItems { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime CreatedDate { get; set; }

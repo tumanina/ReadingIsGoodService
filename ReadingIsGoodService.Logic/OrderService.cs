@@ -30,11 +30,12 @@ namespace ReadingIsGoodService.Logic
             return await _orderRepository.GetOrder(id);
         }
 
-        public async Task<OrderModel> CreateOrder(OrderModel order)
+        public async Task<OrderModel> CreateOrder(OrderModel order, int userId)
         {
             await ValidateOrder(order);
+            await ValidateCustomer(order.CustomerId);
 
-            var orderId = await _orderRepository.CreateOrder(order.CustomerId, order.Items);
+            var orderId = await _orderRepository.CreateOrder(order.CustomerId, order.Items, userId);
             if (orderId == 0)
             {
                 return null;
@@ -45,20 +46,20 @@ namespace ReadingIsGoodService.Logic
             {
                 foreach (var item in order.Items)
                 {
-                    await _productRepository.StockQuantityDecrement(item.ProductId, item.Quantity);
+                    await _productRepository.StockQuantityDecrement(item.ProductId, item.Quantity, userId);
                     updatedItems.Add(item);
                 }
-                await _orderRepository.UpdateStatus(orderId, OrderStatus.Approved);
+                await _orderRepository.UpdateStatus(orderId, OrderStatus.Approved, userId);
             }
             catch (Exception ex)
             {
                 //todo: log reason of rejecting
-                await _orderRepository.UpdateStatus(orderId, OrderStatus.Rejected);
+                await _orderRepository.UpdateStatus(orderId, OrderStatus.Rejected, userId);
 
                 //todo: improve to command rollback
                 foreach (var item in updatedItems)
                 {
-                    await _productRepository.StockQuantityIncrement(item.ProductId, item.Quantity);
+                    await _productRepository.StockQuantityIncrement(item.ProductId, item.Quantity, userId);
                 }
             }
 
@@ -70,11 +71,20 @@ namespace ReadingIsGoodService.Logic
             foreach (var item in order.Items)
             {
                 var product = await _productRepository.GetProduct(item.ProductId);
+                if (product == null)
+                {
+                    throw new Exception($"Product with id {item.ProductId} not exist");
+                }
                 if (product.StockQuantity < item.Quantity)
                 {
                     throw new Exception($"Stock quantity of product with id {item.ProductId} less than {item.Quantity}");
                 }
             }
+        }
+
+        private async Task ValidateCustomer(int customerId)
+        {
+            //todo: validate that customer exist and active
         }
     }
 }

@@ -19,6 +19,9 @@ namespace ReadingIsGoodService.Data.Configuration
             builder.Property(x => x.Email)
                 .HasMaxLength(100)
                 .IsRequired();
+
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
         }
     }
 }

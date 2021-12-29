@@ -7,6 +7,6 @@ namespace ReadingIsGoodService.Logic.Interfaces
     public interface ICustomerService
     {
         Task<IEnumerable<CustomerModel>> GetCustomers();
-        Task<int> CreateCustomer(CustomerModel customer);
+        Task<int> CreateCustomer(CustomerModel customer, int userId);
     }
 }
