@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ReadingIsGoodService.Api.Extensions;
 using ReadingIsGoodService.Api.Models;
 using ReadingIsGoodService.Logic.Interfaces;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                return (await _customerService.GetCustomers()).Select(c => new CustomerDetailModel { Id = c.Id, Name = c.Name }).ToList();
+                return (await _customerService.GetCustomers()).Select(c => new CustomerDetailModel { Id = c.Id, Name = c.Name, Email = c.Email }).ToList();
             });
         }
 
@@ -35,7 +36,8 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                return await _customerService.CreateCustomer(new Common.Models.CustomerModel { Name = customer.Name, Email = customer.Email }, 5);
+                return await _customerService.CreateCustomer(new Common.Models.CustomerModel { Name = customer.Name, Email = customer.Email }, 
+                    userId: HttpContext.GetCurrentUserId());
             });
         }
     }

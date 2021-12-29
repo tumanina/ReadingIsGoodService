@@ -6,7 +6,7 @@ namespace ReadingIsGoodService.Tests.IntegrationTests.Models
 {
     public class OrderDetailModel
     {
-        public IEnumerable<BaseOrderItemModel> ProductItems { get; set; }
+        public IEnumerable<OrderItemModel> ProductItems { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }

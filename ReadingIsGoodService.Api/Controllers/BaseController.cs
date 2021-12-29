@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ReadingIsGoodService.Api.Auth;
 
 namespace ReadingIsGoodService.Api.Controllers
 {
     [ApiController]
+    [Authorization]
     public abstract class BaseController : ControllerBase
     {
         internal async Task<BaseApiDataModel<T>> Execute<T>(Func<Task<T>> func)

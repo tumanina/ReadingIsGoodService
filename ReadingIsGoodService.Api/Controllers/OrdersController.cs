@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReadingIsGoodService.Api.Models;
-using ReadingIsGoodService.Common.Models;
 using ReadingIsGoodService.Logic.Interfaces;
+using ReadingIsGoodService.Api.Mapping;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ReadingIsGoodService.Api.Extensions;
 
 namespace ReadingIsGoodService.Api.Controllers
 {
@@ -29,13 +30,7 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                //todo: move to mapping
-                return (await _orderService.GetCustomerOrders(customerId)).Select(c => new OrderDetailModel
-                {
-                    Customer = new CustomerDetailModel { Id = c.Customer.Id, Name = c.Customer.Name, Email = c.Customer.Email },
-                    Status = c.Status,
-                    ProductItems = c.Items.Select(i => new OrderItemDetailModel { ProductQuantity = i.Quantity, ProductName = i.Product?.Name })
-                }).ToList();
+                return (await _orderService.GetCustomerOrders(customerId)).Select(c => c.Map()).ToList();
             });
         }
 
@@ -46,18 +41,7 @@ namespace ReadingIsGoodService.Api.Controllers
             return await Execute(async () =>
             {
                 var order = await _orderService.GetOrder(id);
-
-                if (order == null)
-                {
-                    return null;
-                }
-
-                return new OrderDetailModel
-                {
-                    Customer = new CustomerDetailModel { Id = order.Customer.Id, Name = order.Customer.Name, Email = order.Customer.Email },
-                    Status = order.Status,
-                    ProductItems = order.Items.Select(i => new OrderItemDetailModel { ProductQuantity = i.Quantity, ProductName = i.Product?.Name })
-                };
+                return order == null ? null : order.Map();
             });
         }
 
@@ -67,24 +51,8 @@ namespace ReadingIsGoodService.Api.Controllers
         {
             return await Execute(async () =>
             {
-                var order = await _orderService.CreateOrder(new OrderModel 
-                {
-                    CustomerId = orderModel.CustomerId, 
-                    Items = orderModel.ProductItems.Select(i => new OrderItemModel { ProductId = i.ProductId, Quantity = i.ProductQuantity })
-                }, 5);
-
-                if (order == null)
-                {
-                    return null;
-                }
-
-                return new OrderDetailModel
-                {
-                    Id = order.Id,
-                    Customer = new CustomerDetailModel { Id = order.Customer.Id, Name = order.Customer.Name, Email = order.Customer.Email },
-                    Status = order.Status,
-                    ProductItems = order.Items.Select(i => new OrderItemDetailModel { ProductQuantity = i.Quantity, ProductName = i.Product?.Name })
-                };
+                var order = await _orderService.CreateOrder(orderModel.Map(), userId: HttpContext.GetCurrentUserId());
+                return order == null ? null : order.Map();
             });
         }
     }

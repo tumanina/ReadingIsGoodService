@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using ReadingIsGoodService.Api.Auth;
 using ReadingIsGoodService.Api.Models;
 using ReadingIsGoodService.Common.Extensions;
 using ReadingIsGoodService.Data.Configuration;
@@ -40,6 +41,7 @@ namespace ReadingIsGoodService.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReadingIsGoodService Api", Version = "v1" });
             });
 
+            services.ConfigureAuth();
             services.ConfigureDataLayer(Configuration);
             services.ConfigureLogic();
         }
@@ -58,6 +60,7 @@ namespace ReadingIsGoodService.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
