@@ -37,10 +37,7 @@ namespace ReadingIsGoodService.Api
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReadingIsGoodService Api", Version = "v1" });
-            });
+            ConfigureSwagger(services);
 
             services.ConfigureAuth();
             services.ConfigureDataLayer(Configuration);
@@ -50,16 +47,12 @@ namespace ReadingIsGoodService.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ReadingIsGoodService Api v1"));
-            }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ReadingIsGoodService Api v1"));
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -79,5 +72,37 @@ namespace ReadingIsGoodService.Api
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(message));
             }));
         }
+
+        private void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
+                c.AddSecurityDefinition("Bearer Token", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header Token. Enter : \"Bearer YourTokenHere\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer Token",
+                    BearerFormat = "JWT",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer Token"
+                                }
+                            },
+                            new string[] {}
+                    }
+                });
+            });
+        }
+
     }
 }
