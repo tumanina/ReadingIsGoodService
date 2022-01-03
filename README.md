@@ -19,6 +19,8 @@ To create/update local database change `ConnectionStrings.DefaultConnection` set
 Update database command can be called as one of deployment's steps or part of container (Dockerfile).
 2. Database in memory. Switching to this option is managed by flag UseInMemoryDatabase in appsetting.json file. This features can be used for testing purposes (integration tests).
 
+Database design represent very simple solution, for example address has been simplified from one-to-many relation to single field, also price should contain currency and have to be time-related.
+
 <b>Authorizaion and Authentification:</b>
 
 Token for testing purpose: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJ1c2VyaWQiOjU3OTN9.mXLWmKSxcuTX_GM5V6e7WeEDA-dofCsr0ZZldkd7v7k
@@ -31,7 +33,8 @@ Current logic just read token and extract userId without token validation and ch
 3. Only creating order functionality was covered by unit and integration tests. In real application each condition and edge cases must be covered by unit and integration tests.
 4. Pagination for get customers and get order was not mentioned, so i missed this, but for real appliation it is good to use page size and page number parameters in api request.
 5. Application was implemented as monolithic system. In case of microservice architecture some part of the system can be done other way: for example in case of events based architecture activity logging can be done based on these events, also Saga pattern can be used to solve problem with stock change in order creating functionality.
-6. Theoretically application like this can be used as a good example of implementing CQRS, but on my mind for test assesments CQRS is overhead if not specified in requrements.
+6. Theoretically application like this can be used as a good example of implementing CQRS, but on my mind for test assesments CQRS is overhead if not specified in requrements. The same for Clean architecture, 3-tiers level has more posibities to check 
+7. Activity tracker implemented only for add and update, for delete it is good to implemement soft delete (IsDeleted flag in entities) and call update method of BaseRepository.
 
 <b>Stock update problem</b> can also be solved in other ways:
 1. Transaction on database level with commit only after all operations done
