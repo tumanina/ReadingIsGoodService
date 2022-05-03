@@ -17,7 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ReadingIsGoodService.Data\ReadingIsGoodService.Data.csproj" />
-    <ProjectReference Include="..\ReadingIsGoodService.Logic\ReadingIsGoodService.Logic.csproj" />
+    <ProjectReference Include="..\ReadingIsGoodService.Logic\ReadingIsGoodService.Customers.Logic.csproj" />
+    <ProjectReference Include="..\ReadingIsGoodService.Orders.Logic\ReadingIsGoodService.Orders.Logic.csproj" />
   </ItemGroup>
 
 </Project>

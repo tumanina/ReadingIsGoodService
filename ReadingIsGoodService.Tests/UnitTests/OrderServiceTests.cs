@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ReadingIsGoodService.Data.Repositories;
-using ReadingIsGoodService.Logic;
 using ReadingIsGoodService.Common.Models;
 using ReadingIsGoodService.Common.Enums;
+using ReadingIsGoodService.Orders.Logic;
 
 namespace ReadingIsGoodService.Tests.UnitTests
 {

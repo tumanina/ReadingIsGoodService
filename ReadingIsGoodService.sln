@@ -3,15 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingIsGoodService.Api", "ReadingIsGoodService.Api\ReadingIsGoodService.Api.csproj", "{F63D7988-6C42-4DA2-AAFE-5E1ACA34173A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Customers.Api", "ReadingIsGoodService.Customers.Api\ReadingIsGoodService.Customers.Api.csproj", "{F63D7988-6C42-4DA2-AAFE-5E1ACA34173A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingIsGoodService.Logic", "ReadingIsGoodService.Logic\ReadingIsGoodService.Logic.csproj", "{2EE5CCFF-ED17-42B8-923F-2867A7AB38DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Customers.Logic", "ReadingIsGoodService.Customers.Logic\ReadingIsGoodService.Customers.Logic.csproj", "{2EE5CCFF-ED17-42B8-923F-2867A7AB38DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingIsGoodService.Data", "ReadingIsGoodService.Data\ReadingIsGoodService.Data.csproj", "{DBAC7F03-F01D-4621-8E2B-EFAA94E6017C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Data", "ReadingIsGoodService.Data\ReadingIsGoodService.Data.csproj", "{DBAC7F03-F01D-4621-8E2B-EFAA94E6017C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingIsGoodService.Tests", "ReadingIsGoodService.Tests\ReadingIsGoodService.Tests.csproj", "{AF7A5ED6-12F8-4652-A5EF-4D35C2A04D15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Tests", "ReadingIsGoodService.Tests\ReadingIsGoodService.Tests.csproj", "{AF7A5ED6-12F8-4652-A5EF-4D35C2A04D15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingIsGoodService.Common", "ReadingIsGoodService.Common\ReadingIsGoodService.Common.csproj", "{50DF0AAD-A958-40E0-AA64-CAB65F331EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Common", "ReadingIsGoodService.Common\ReadingIsGoodService.Common.csproj", "{50DF0AAD-A958-40E0-AA64-CAB65F331EBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Orders.Api", "ReadingIsGoodService.Orders.Api\ReadingIsGoodService.Orders.Api.csproj", "{BD42D763-07B9-4612-8207-83F46EF6CBE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Orders.Logic", "ReadingIsGoodService.Orders.Logic\ReadingIsGoodService.Orders.Logic.csproj", "{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4CE98818-33B2-49BA-BFE5-2547777FF9B8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.dcproj = docker-compose.dcproj
+		docker-compose.dcproj.user = docker-compose.dcproj.user
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +50,14 @@ Global
 		{50DF0AAD-A958-40E0-AA64-CAB65F331EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50DF0AAD-A958-40E0-AA64-CAB65F331EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50DF0AAD-A958-40E0-AA64-CAB65F331EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD42D763-07B9-4612-8207-83F46EF6CBE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD42D763-07B9-4612-8207-83F46EF6CBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD42D763-07B9-4612-8207-83F46EF6CBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD42D763-07B9-4612-8207-83F46EF6CBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
