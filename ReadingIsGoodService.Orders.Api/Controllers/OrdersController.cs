@@ -27,7 +27,6 @@ namespace ReadingIsGoodService.OrdersApi.Controllers
 
         [HttpGet]
         [Route("orders")]
-        [Route("customers/{customerId}/orders")]
         public async Task<BaseApiDataModel<List<OrderDetailModel>>> GetCustomerOrders(int customerId)
         {
             return await Execute(async () =>

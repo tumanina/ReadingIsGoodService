@@ -8,9 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["ReadingIsGoodService.Customers.Api/ReadingIsGoodService.Customers.Api.csproj", "ReadingIsGoodService.Customers.Api/"]
-COPY ["ReadingIsGoodService.Common/ReadingIsGoodService.Common.csproj", "ReadingIsGoodService.Common/"]
-COPY ["ReadingIsGoodService.Customers.Logic/ReadingIsGoodService.Customers.Logic.csproj", "ReadingIsGoodService.Customers.Logic/"]
-COPY ["ReadingIsGoodService.Data/ReadingIsGoodService.Data.csproj", "ReadingIsGoodService.Data/"]
 RUN dotnet restore "ReadingIsGoodService.Customers.Api/ReadingIsGoodService.Customers.Api.csproj"
 COPY . .
 WORKDIR "/src/ReadingIsGoodService.Customers.Api"
@@ -22,4 +19,4 @@ RUN dotnet publish "ReadingIsGoodService.Customers.Api.csproj" -c Release -o /ap
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ReadingIsGoodService.Customers.Api.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet ReadingIsGoodService.Customers.Api.dll

@@ -17,12 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Orders
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingIsGoodService.Orders.Logic", "ReadingIsGoodService.Orders.Logic\ReadingIsGoodService.Orders.Logic.csproj", "{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4CE98818-33B2-49BA-BFE5-2547777FF9B8}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.dcproj = docker-compose.dcproj
-		docker-compose.dcproj.user = docker-compose.dcproj.user
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{59E836DB-4A42-4C6B-BD68-B0AFDFFF6DD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +53,10 @@ Global
 		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0D4B8E8-610D-4972-B6AC-0A38DE4874A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E836DB-4A42-4C6B-BD68-B0AFDFFF6DD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E836DB-4A42-4C6B-BD68-B0AFDFFF6DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E836DB-4A42-4C6B-BD68-B0AFDFFF6DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E836DB-4A42-4C6B-BD68-B0AFDFFF6DD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

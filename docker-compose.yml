@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  customers.api:
+    build:
+      context: .
+      dockerfile: ReadingIsGoodService.Customers.Api/Dockerfile
+    container_name: customers.api
+    ports:
+      - "8031:80"
+
+  orders.api:
+    build:
+      context: .
+      dockerfile: ReadingIsGoodService.Orders.Api/Dockerfile
+    container_name: orders.api
+    ports:
+      - "8032:80"
