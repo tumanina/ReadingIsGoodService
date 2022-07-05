@@ -71,9 +71,8 @@ Update database command can be called as one of deployment's steps or part of co
 3. Only creating order functionality was covered by unit and integration tests. In real application each condition and edge cases must be covered by unit and integration tests.
 4. It is good to use page size and page number parameters in api request.
 5. Some part of the system can be done other way: for example in case of events based architecture activity logging can be done based on these events, also Saga pattern can be used to solve problem with stock change in order creating functionality.
-6. Theoretically application like this can be used as a good example of implementing CQRS, but on my mind for test assesments CQRS is overhead if not specified in requrements. The same for Clean architecture, 3-tiers level has more posibities to check 
-7. Activity tracker implemented only for add and update, for delete it is good to implemement soft delete (IsDeleted flag in entities) and call update method of BaseRepository.
-8. Database design represents very simple solution, for example address has been simplified from one-to-many relation to single field, also price should contain currency and have to be time-related.
+6. Activity tracker implemented only for add and update, for delete it is good to implemement soft delete (IsDeleted flag in entities) and call update method of BaseRepository.
+7. Database design represents very simple solution, for example address has been simplified from one-to-many relation to single field, also price should contain currency and have to be time-related.
 
 <b>Stock update problem</b> can also be solved in other ways:
 1. Transaction on database level with commit only after all operations done
